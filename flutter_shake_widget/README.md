@@ -20,7 +20,9 @@ return ShakeWidget (
   shakeDuration = const Duration(milliseconds: 400),
 )
 ```
+
 You can use a `GlobalKey` to trigger easily one ShakeWidget if you have several ShakeWidget in the same file.
+
 
 ```dart
 class Test extends StatefulWidget {
