@@ -13,7 +13,6 @@ There is a little example of the usage of this widget.
 
 ```dart
 return ShakeWidget (
-  key: _shakeWidget,
   child: ...,         // Required field
   shakeOffset = 6,    // Required field
   shakeCount = 3,
