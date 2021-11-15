@@ -1,39 +1,80 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
-
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages). 
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages). 
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
-
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+This widget is used to animate a widget with a shake animation. There are a lot of 
+customisable fields : 
+- The widget being animated
+- The number of times it shakes
+- The shake offset
+- The animation duration
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
+There is a little example of the usage of this widget.
 
 ```dart
-const like = 'sample';
+return ShakeWidget (
+  key: _shakeWidget,
+  child: ...,         // Required field
+  shakeOffset = 6,    // Required field
+  shakeCount = 3,
+  shakeDuration = const Duration(milliseconds: 400),
+)
+```
+You can use a `GlobalKey` to trigger easily one ShakeWidget if you have several ShakeWidget in the same file.
+
+```dart
+class Test extends StatefulWidget {
+  const Test({Key? key}) : super(key: key);
+
+  @override
+  State<Test> createState() => _TestState();
+}
+
+class _TestState extends State<Test> {
+  final _firstContainer = GlobalKey<ShakeWidgetState>();
+  final _secondContainer = GlobalKey<ShakeWidgetState>();
+  
+  void onFirstPressed() {
+    _firstContainer.currentState?.shake();
+  }
+
+  void onSecondPressed() {
+    _secondContainer.currentState?.shake();
+  }
+  
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        children: [
+          ShakeWidget(
+            key: _firstContainer,
+            shakeCount: 3,
+            shakeOffset: 6,
+            shakeDuration: const Duration(milliseconds: 400),
+            child: Container(
+              width: 50,
+              height: 50,
+              color: Colors.red,
+            )
+          ),
+          ShakeWidget(
+              key: _secondContainer,
+              shakeCount: 5,
+              shakeOffset: 10,
+              shakeDuration: const Duration(milliseconds: 1000),
+              child: Container(
+                width: 70,
+                height: 70,
+                color: Colors.blue,
+              )
+          ),
+          ElevatedButton(onPressed: onFirstPressed, child: const Text("First")),
+          ElevatedButton(onPressed: onSecondPressed, child: const Text("Second")),
+        ],
+      ),
+    );
+  }
+}
 ```
 
-## Additional information
-
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
